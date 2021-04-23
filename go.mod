@@ -10,6 +10,7 @@ require (
 	github.com/paypal/load-watcher v0.1.1
 	github.com/spf13/pflag v1.0.5
 	github.com/stretchr/testify v1.6.1
+	gopkg.in/yaml.v2 v2.3.0
 	k8s.io/api v0.20.5
 	k8s.io/apiextensions-apiserver v0.0.0
 	k8s.io/apimachinery v0.20.5
@@ -23,9 +24,11 @@ require (
 	k8s.io/kube-openapi v0.0.0-20201113171705-d219536bb9fd
 	k8s.io/kube-scheduler v0.20.5
 	k8s.io/kubernetes v1.20.5
+	fluxcli v0.0.0
 )
 
 replace (
+	fluxcli => /go/src/fluxcli
 	k8s.io/api => k8s.io/api v0.20.5
 	k8s.io/apiextensions-apiserver => k8s.io/apiextensions-apiserver v0.20.5
 	k8s.io/apimachinery => k8s.io/apimachinery v0.20.5
