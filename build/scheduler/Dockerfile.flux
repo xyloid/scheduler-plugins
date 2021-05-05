@@ -104,14 +104,14 @@ WORKDIR /go/src/sigs.k8s.io/scheduler-plugins
 COPY cmd cmd/
 COPY hack hack/
 COPY pkg  pkg/
-COPY flux-k8s/flux-plugin/kubeflux pkg/
+COPY flux-k8s/flux-plugin/kubeflux pkg/kubeflux/
 COPY test test/
 COPY go.mod .
 COPY go.sum .
 COPY Makefile .
 ARG ARCH
 ARG RELEASE_VERSION
-ENV BUILDENVVAR CGO_CFLAGS="-I/root/flux-sched/resource/hlapi/bindings/c -I/root/flux-install/include" CGO_LDFLAGS="-L/root/flux-sched/resource/hlapi/bindings/c/.libs -lreapi_cli  -L/root/flux-sched/resource/.libs -lresource -lstdc++ -lczmq -ljansson -lhwloc -lboost_system -L/root/flux-install/lib -lflux-hostlist -lboost_graph -lyaml-cpp"
+#ENV BUILDENVVAR CGO_CFLAGS="-I/root/flux-sched/resource/hlapi/bindings/c -I/root/flux-install/include" CGO_LDFLAGS="-L/root/flux-sched/resource/hlapi/bindings/c/.libs -lreapi_cli  -L/root/flux-sched/resource/.libs -lresource -lstdc++ -lczmq -ljansson -lhwloc -lboost_system -L/root/flux-install/lib -lflux-hostlist -lboost_graph -lyaml-cpp"
 
 RUN RELEASE_VERSION=${RELEASE_VERSION} make build-scheduler.$ARCH && mv bin/kube-scheduler /bin/
 WORKDIR /bin
