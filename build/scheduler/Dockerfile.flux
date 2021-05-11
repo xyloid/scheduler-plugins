@@ -76,15 +76,10 @@ RUN apt-get -y --no-install-recommends install \
 RUN cd /root/ && mkdir flux-install
 WORKDIR /root/
 RUN git clone https://github.com/flux-framework/flux-core.git --branch v0.25.0 --single-branch 
-RUN cd /root/flux-core/ && ./autogen.sh && PYTHON_VERSION=3.8 ./configure --prefix=/root/flux-install \ 
+RUN cd flux-core/ && ./autogen.sh && PYTHON_VERSION=3.8 ./configure --prefix=/root/flux-install \ 
     && make && make install && cd /root && rm -rf /root/flux-core
- 
-RUN cd /root/ && git clone https://github.com/cmisale/flux-sched.git --branch gobind-dev --single-branch
-WORKDIR /root/flux-sched/
-ENV PATH "/root/flux-install/bin:$PATH"
-ENV LD_LIBRARY_PATH "/root/flux-install/lib/flux:/root/flux-install/lib"
-RUN flux keygen
-RUN ./autogen.sh && PYTHON_VERSION=3.8 ./configure --prefix=/root/flux-install && make -j && make install
+
+
 # Install go 15
 WORKDIR /home
 RUN wget https://dl.google.com/go/go1.15.2.linux-amd64.tar.gz  && tar -xvf go1.15.2.linux-amd64.tar.gz && \
@@ -93,11 +88,18 @@ RUN wget https://dl.google.com/go/go1.15.2.linux-amd64.tar.gz  && tar -xvf go1.1
 ENV GOROOT "/usr/local/go"
 ENV GOPATH "/go"
 ENV PATH "$GOROOT/bin:$PATH"
-# WORKDIR /root/flux-sched/
 RUN mkdir -p /go/src
+
+RUN cd /root/ && git clone https://github.com/cmisale/flux-sched.git --branch gobind-dev --single-branch
+WORKDIR /root/flux-sched/
+ENV PATH "/root/flux-install/bin:$PATH"
+ENV LD_LIBRARY_PATH "/root/flux-install/lib/flux:/root/flux-install/lib"
+RUN flux keygen
+RUN ./autogen.sh && PYTHON_VERSION=3.8 ./configure --prefix=/root/flux-install && make -j && make install && cp t/data/resource/jgfs/tiny.json /home \
+	&& cp /root/flux-sched/t/scripts/flux-ion-resource.py /root/flux-install/libexec/flux/cmd/ && rm -rf t
+
 RUN cp -r /root/flux-sched/resource/hlapi/bindings/go/src/fluxcli /go/src/ && cd /go/src/fluxcli &&  go mod init
 RUN cd /go/src && GOOS=linux CGO_CFLAGS="-I/root/flux-sched/resource/hlapi/bindings/c -I/root/flux-install/include" CGO_LDFLAGS="-L/root/flux-sched/resource/hlapi/bindings/c/.libs -lreapi_cli  -L/root/flux-sched/resource/.libs -lresource -lstdc++ -lczmq -ljansson -lhwloc -lboost_system -L/root/flux-install/lib -lflux-hostlist -lboost_graph -lyaml-cpp" go install -v fluxcli
-RUN cp /root/flux-sched/t/scripts/flux-ion-resource.py /root/flux-install/libexec/flux/cmd/
 
 
 WORKDIR /go/src/sigs.k8s.io/scheduler-plugins
@@ -111,11 +113,10 @@ COPY go.sum .
 COPY Makefile .
 ARG ARCH
 ARG RELEASE_VERSION
-#ENV BUILDENVVAR CGO_CFLAGS="-I/root/flux-sched/resource/hlapi/bindings/c -I/root/flux-install/include" CGO_LDFLAGS="-L/root/flux-sched/resource/hlapi/bindings/c/.libs -lreapi_cli  -L/root/flux-sched/resource/.libs -lresource -lstdc++ -lczmq -ljansson -lhwloc -lboost_system -L/root/flux-install/lib -lflux-hostlist -lboost_graph -lyaml-cpp"
 
 RUN RELEASE_VERSION=${RELEASE_VERSION} make build-scheduler.$ARCH && mv bin/kube-scheduler /bin/
 WORKDIR /bin
-RUN mkdir -p /home/data/jgf/
+RUN mkdir -p /home/data/jgf/ && mv /home/tiny.json /home/data/jgf/
 RUN mkdir -p /home/data/jobspecs/
 
 CMD ["kube-scheduler"]
