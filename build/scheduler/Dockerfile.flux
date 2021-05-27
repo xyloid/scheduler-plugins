@@ -128,10 +128,10 @@ RUN mkdir -p /home/data/jgf/ && mv /home/tiny.json /home/data/jgf/
 FROM ubuntu:20.10 
 
 # Copy Flux libraries and headers
-COPY --from=basegoflux /root/flux-install/* /root/flux-install/
-COPY --from=basegoflux /root/flux-sched/resource/hlapi/* /root/flux-sched/resource/hlapi/
+COPY --from=basegoflux /root/flux-install /root/flux-install/
+COPY --from=basegoflux /root/flux-sched/resource/hlapi /root/flux-sched/resource/hlapi/
 COPY --from=basegoflux /root/flux-install/lib/libflux-hostlist* /usr/local/lib/
-COPY --from=basegoflux /go/src/fluxcli/*  /go/src/fluxcli/
+COPY --from=basegoflux /go/src/fluxcli  /go/src/fluxcli/
 COPY --from=basegoflux /go/src/sigs.k8s.io/scheduler-plugins/bin/kube-scheduler /bin/kube-scheduler
 COPY --from=basegoflux /home/data/jgf/ /home/data/jgf/
 
@@ -159,5 +159,6 @@ RUN apt-get update && apt-get -y upgrade && apt-get -y --no-install-recommends i
     libc6-dev  \
     lua5.1 liblua5.1-dev lua-posix && apt-get -y clean  && apt-get -y autoremove
 RUN mkdir -p /home/data/jobspecs/
+COPY flux-k8s/flux-plugin/manifests/kubeflux/sched-config.yaml /home/sched-config.yaml
 WORKDIR /bin
 CMD ["kube-scheduler"]
