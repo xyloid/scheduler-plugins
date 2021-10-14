@@ -33,6 +33,7 @@ RUN apt-get update && apt-get -y upgrade && apt-get -y --no-install-recommends i
     python3-sphinx \
     python3-pip \
     python3-setuptools \
+    coreutils \
     libmpich-dev && apt-get purge -y python2.7-minimal && apt-get -y clean  && apt-get -y autoremove
 
 RUN \
@@ -65,7 +66,7 @@ RUN cd /root/ && mkdir flux-install
 WORKDIR /root/
 RUN git clone https://github.com/flux-framework/flux-core.git --branch v0.25.0 --single-branch && \
 	cd flux-core/ && ./autogen.sh && PYTHON_VERSION=3.8 ./configure --prefix=/root/flux-install \ 
-    	&& make && make install && cd /root && rm -rf /root/flux-core
+    	&& make -j$(nproc) && make install && cd /root && rm -rf /root/flux-core
 
 
 # Install go 15
@@ -85,7 +86,7 @@ RUN flux keygen
 
 RUN  git clone https://github.com/cmisale/flux-sched.git --branch gobind-dev --single-branch \ 
 	&& cd /root/flux-sched/ \
-	&& ./autogen.sh && PYTHON_VERSION=3.8 ./configure --prefix=/root/flux-install && make && make install \
+	&& ./autogen.sh && PYTHON_VERSION=3.8 ./configure --prefix=/root/flux-install && make -j$(nproc) && make install \
 	&& cp t/data/resource/jgfs/tiny.json /home \
 	&& cp -r resource/hlapi/bindings/c/.libs/* resource/.libs/* /root/flux-install/lib/ \
 	&& cp -r resource/hlapi/bindings/go/src/fluxcli /go/src/ \
