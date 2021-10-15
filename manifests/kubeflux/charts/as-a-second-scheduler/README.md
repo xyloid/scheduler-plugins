@@ -11,13 +11,14 @@ The `../../init_kind_cluster.sh` the script that creates a local kind cluster an
 ### 1. Start kind cluser
 
 ```bash
+% scheduler-plugins/manifests/kubeflux/
 ./init_kind_cluster.sh
 ```
 
 ### 2 Build local image and push it to local registry
 
 ```bash
-
+% scheduler-plugins/
 make local-image
 
 docker push localhost:5000/scheduler-plugins/kube-scheduler
@@ -33,6 +34,8 @@ The default Helm charts from scheduler-plugins need to be modified.
 
 
 ```bash
+% scheduler-plugins/manifests/kubeflux/charts/
 helm install scheduler-plugins ./as-a-second-scheduler/
 ```
 
+- Note for a 2 nodes cluster, the kubeflux is running on the worker node in namespace `scheduler-plugins`
