@@ -39,3 +39,47 @@ helm install scheduler-plugins ./as-a-second-scheduler/
 ```
 
 - Note for a 2 nodes cluster, the kubeflux is running on the worker node in namespace `scheduler-plugins`
+
+
+## Difference between current scheduler-plugins and pre-built image
+
+- `helm install scheduler-plugins ./as-a-second-scheduler/`
+    - note the branch was based on `canopie-artifacts`, which could be wrong branch
+    - TODO: give main branch a try.
+- `quay.io/cmisale/kubeflux:latest`
+
+```log
+[JobSpec] JobSpec in YAML:
+version: 1
+resources:
+- type: node
+  count: 1
+  with:
+  - type: socket
+    count: 1
+    with:
+    - type: slot
+      count: 1
+      label: default
+      with:
+      - type: core
+        count: 8
+        with:
+        - type: controller-uid
+          count: 0
+        - type: job-name
+          count: 0
+        - type: app
+          count: 0
+attributes:
+  system:
+    duration: 3600
+tasks:
+- command: []
+  slot: default
+  count:
+    per_slot: 1
+
+Time elapsed:  0.000327469
+Pod cannot be scheduled by KubeFlux, nodename  NONE
+```
