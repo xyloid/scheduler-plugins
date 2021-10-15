@@ -24,7 +24,13 @@ docker push localhost:5000/scheduler-plugins/kube-scheduler
 
 ```
 
-### Deploy with Helm
+### Deploy by Helm
+
+The default Helm charts from scheduler-plugins need to be modified.
+
+- `values.yaml`: change the `image` of `scheduler` to local image `localhost:5000/scheduler-plugins/kube-scheduler`
+- `templates/deployment.yaml`: change command, it can be copied from `kubesched.yaml` from `flux-k8s/exmaples/pi`
+
 
 ```bash
 helm install scheduler-plugins ./as-a-second-scheduler/
