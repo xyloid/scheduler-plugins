@@ -59,6 +59,9 @@ rules:
 - apiGroups: ["scheduling.sigs.k8s.io"]
   resources: ["podgroups", "elasticquotas"]
   verbs: ["get", "list", "watch", "create", "delete", "update", "patch"]
+- apiGroups: [""]
+  resources: ["configmaps"]
+  verbs: ["get", "list", "watch"]
 ---
 kind: ClusterRoleBinding
 apiVersion: rbac.authorization.k8s.io/v1

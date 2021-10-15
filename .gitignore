@@ -18,3 +18,5 @@
 *.sublime-project
 *.sublime-workspace
 *~
+
+/_logs/
