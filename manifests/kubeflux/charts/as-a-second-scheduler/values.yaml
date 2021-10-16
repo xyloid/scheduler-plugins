@@ -5,7 +5,8 @@
 scheduler:
   name: scheduler-plugins-scheduler
   # image: k8s.gcr.io/scheduler-plugins/kube-scheduler:v0.19.9
-  image: localhost:5000/scheduler-plugins/kube-scheduler
+  # image: localhost:5000/scheduler-plugins/kube-scheduler
+  image: quay.io/cmisale/kubeflux:bugfix
   namespace: scheduler-plugins
   replicaCount: 1
 
