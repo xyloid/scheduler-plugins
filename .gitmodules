@@ -3,4 +3,4 @@
 	# url = git@github.com:flux-framework/flux-k8s.git
 	url = git@github.com:xyloid/flux-k8s.git 
 	# branch = dev
-	branch = main
+	branch = develop
