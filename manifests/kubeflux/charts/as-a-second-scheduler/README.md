@@ -2,10 +2,12 @@
 
 This charts is intended to install kubeflux scheduler to a local kind cluster with local registry (this is documented in kind documentation).
 
-The `../../init_kind_cluster.sh` the script that creates a local kind cluster and a local registry. By default it will create one master and one worker node.
+# Run pi test with one script
+
+The `../../init_kind_cluster.sh` scriptcreates a local kind cluster and a local registry. By default it will create one master and one worker node.
 
 
-# Simple way to run pi test
+# Run pi test step by step
 
 ```bash
   cd scheduler-plugins/manifests/kubeflux/
