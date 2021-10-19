@@ -38,8 +38,8 @@ cd $PROJECT_ROOT/manifests/kubeflux/charts/
 
 helm install scheduler-plugins ./as-a-second-scheduler/ 
 
-
-echo "kubeflux is starting"
+echo ""
+echo -n "kubeflux is starting"
 
 while true;
 do 
@@ -48,15 +48,16 @@ do
     if [ $POD_STATUS == "Running" ]; 
     then
         echo " kubeflux is running"
+        echo ""
         break
     fi
     echo -n " ."
     sleep 1
 done
 
-
-echo  "kubeflux pod name" $(kubectl get pod -l component=scheduler -n scheduler-plugins -o jsonpath="{.items[0].metadata.name}")
-
+echo ""
+echo  "kubeflux podname:" $(kubectl get pod -l component=scheduler -n scheduler-plugins -o jsonpath="{.items[0].metadata.name}")
+echo ""
 
 
 
@@ -64,6 +65,31 @@ echo "Step 5: Deploy Pi test"
 
 cd $PROJECT_ROOT/flux-k8s/examples/pi/ 
 
+kubectl create -f ./pi-job-default.yaml
 kubectl create -f ./pi-job-kubeflux.yaml
 
-kubectl get pods
+
+# Task 2 
+
+# echo "Step 5: Deploy pi test with default and kubeflux scheduler"
+
+# cd $PROJECT_ROOT/flux-k8s/examples/pi/ 
+
+# kubectl create -f ./pi-job-default.yaml
+# kubectl create -f ./pi-job-kubeflux.yaml
+
+
+INTERVAL=3
+COUNT=5
+
+echo ""
+echo "Check pods"
+echo ""
+
+for i in $(eval echo {1..$COUNT})
+do
+    sleep $INTERVAL
+    echo "check $i"
+    kubectl get pods
+    echo ""
+done
