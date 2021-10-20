@@ -65,10 +65,15 @@ echo "Step 5: Deploy Pi test"
 
 cd $PROJECT_ROOT/flux-k8s/examples/pi/ 
 
-kubectl create -f ./pi-job-kubeflux.yaml
-echo "sleep for 1 sec"
-sleep 1
+# kubectl create -f ./pi-job-kubeflux.yaml
+# echo "sleep for 1 sec"
+# sleep 1
+# kubectl create -f ./pi-job-default.yaml
+
 kubectl create -f ./pi-job-default.yaml
+# echo "sleep for 1 sec"
+# sleep 1
+kubectl create -f ./pi-job-kubeflux.yaml
 
 
 
