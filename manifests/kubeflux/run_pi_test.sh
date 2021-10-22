@@ -91,7 +91,7 @@ kubectl create -f ./pi-job-kubeflux-segfault.yaml
 
 
 INTERVAL=3
-COUNT=5
+COUNT=10
 
 echo ""
 echo "Check pods"
