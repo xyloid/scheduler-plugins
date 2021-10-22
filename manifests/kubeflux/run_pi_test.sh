@@ -19,6 +19,7 @@ kind delete cluster --name $CLUSTER_NAME
 echo "Step 2: build pi test"
 
 make build-image && make push-image-local
+make build-segfault-image && make push-segfault-image-local
 
 
 
@@ -70,10 +71,12 @@ cd $PROJECT_ROOT/flux-k8s/examples/pi/
 # sleep 1
 # kubectl create -f ./pi-job-default.yaml
 
-kubectl create -f ./pi-job-default.yaml
+# kubectl create -f ./pi-job-default.yaml
 # echo "sleep for 1 sec"
 # sleep 1
-kubectl create -f ./pi-job-kubeflux.yaml
+# kubectl create -f ./pi-job-kubeflux.yaml
+
+kubectl create -f ./pi-job-kubeflux-segfault.yaml
 
 
 
