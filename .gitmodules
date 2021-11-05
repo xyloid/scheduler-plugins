@@ -1,0 +1,4 @@
+[submodule "flux-k8s"]
+	path = flux-k8s
+	url = git@github.com:xyloid/flux-k8s.git
+	branch = dev_operator
