@@ -1,8 +1,0 @@
-[submodule "flux-k8s"]
-	path = flux-k8s
-	# url = git@github.com:flux-framework/flux-k8s.git
-	url = git@github.com:xyloid/flux-k8s.git 
-	# branch = dev
-	# branch = develop
-	branch = main
-	update = merge # make the sub module track the original branch instead of a detached head
