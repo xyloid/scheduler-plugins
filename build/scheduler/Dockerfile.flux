@@ -84,7 +84,7 @@ ENV PATH "/root/flux-install/bin:$PATH"
 ENV LD_LIBRARY_PATH "/root/flux-install/lib/flux:/root/flux-install/lib"
 RUN flux keygen
 
-RUN  git clone https://github.com/cmisale/flux-sched.git --branch gobind-dev --single-branch \ 
+RUN  git clone git@github.com:xyloid/flux-sched.git --branch measurement-dev --single-branch \ 
 	&& cd /root/flux-sched/ \
 	&& ./autogen.sh && PYTHON_VERSION=3.8 ./configure --prefix=/root/flux-install && make -j$(nproc) && make install \
 	&& cp t/data/resource/jgfs/tiny.json /home \
