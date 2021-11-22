@@ -76,9 +76,9 @@ cd $PROJECT_ROOT/flux-k8s/examples/pi/
 # sleep 1
 # kubectl create -f ./pi-job-kubeflux.yaml
 
-kubectl create -f ./pi-job-kubeflux-segfault.yaml
+kubectl create -f ./pi-job-default.yaml
 
-sleep 5
+sleep 1
 
 kubectl create -f ./pi-job-kubeflux.yaml
 
