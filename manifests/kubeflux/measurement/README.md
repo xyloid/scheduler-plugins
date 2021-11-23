@@ -17,6 +17,7 @@
     - scheduler-plugins:
         - `git@github.com:xyloid/scheduler-plugins.git`
         - branch: `dev-kubeflux-measurement`
+        - `docker pull xuyilindocker/kubeflux:latest`
         - scripts for the experiment
             - setup connection
             - deploy kubeflux
