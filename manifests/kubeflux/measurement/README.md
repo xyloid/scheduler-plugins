@@ -37,10 +37,20 @@ $ kubectl get nodes --kubeconfig=ocp-perf-cluster.yaml
 
 ```
 
+### A Simpler Way
+
+Back up the current `~/.kube/config` file, then copy the content in `ocp-perf-cluster.yaml` to `config` file.
+
 ### Remove master label (could be optional in other cases)
 
 - [link](https://stackoverflow.com/questions/34067979/how-to-delete-a-node-label-by-command-and-api)
 
 ```bash
 kubectl label node 10.240.64.5 node-role.kubernetes.io/master- --kubeconfig=ocp-perf-cluster.yaml
+```
+
+## Run Pi Test with Default Scheduler
+
+```bash
+kubectl create -f ./pi-job-default.yaml --kubeconfig=ocp-perf-cluster.yaml
 ```

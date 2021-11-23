@@ -15,7 +15,7 @@ spec:
         image: xuyilindocker/pi:latest
         resources:
           limits:
-            cpu: "8"
+            cpu: "2"
           requests:
-            cpu: "8"
+            cpu: "2"
       restartPolicy: Never      
