@@ -159,7 +159,10 @@ RUN apt-get update && apt-get -y upgrade && apt-get -y --no-install-recommends i
     make \
     libc6-dev  \
     lua5.1 liblua5.1-dev lua-posix && apt-get -y clean  && apt-get -y autoremove
+
+RUN chmod 0777 -R home/data
 RUN mkdir -p /home/data/jobspecs/
+
 COPY flux-k8s/flux-plugin/manifests/kubeflux/sched-config.yaml /home/sched-config.yaml
 WORKDIR /bin
 CMD ["kube-scheduler"]
