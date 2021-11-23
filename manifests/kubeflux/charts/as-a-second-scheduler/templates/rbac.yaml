@@ -54,13 +54,16 @@ rules:
   resources: ["subjectaccessreviews"]
   verbs: ["create"]
 - apiGroups: ["storage.k8s.io"]
-  resources: ["csinodes", "storageclasses"]
+  resources: ["csinodes", "storageclasses", "csidrivers", "csistoragecapacities"]
   verbs: ["get", "list", "watch"]
 - apiGroups: ["scheduling.sigs.k8s.io"]
   resources: ["podgroups", "elasticquotas"]
   verbs: ["get", "list", "watch", "create", "delete", "update", "patch"]
 - apiGroups: [""]
   resources: ["configmaps"]
+  verbs: ["get", "list", "watch"]
+- apiGroups: [""]
+  resources: ["namespaces"]
   verbs: ["get", "list", "watch"]
 ---
 kind: ClusterRoleBinding
