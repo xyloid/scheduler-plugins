@@ -53,5 +53,28 @@ kubectl label node 10.240.64.5 node-role.kubernetes.io/master- --kubeconfig=ocp-
 ## Run Pi Test with Default Scheduler
 
 ```bash
-kubectl create -f ./pi-job-default.yaml --kubeconfig=ocp-perf-cluster.yaml
+cd $PROJECT_ROOT/manifests/kubeflux/measurement
+
+kubectl create -f ./pi-job-default.yaml 
+```
+
+## Install Kubeflux
+
+```bash
+cd $PROJECT_ROOT/manifests/kubeflux/charts
+
+# install
+helm install scheduler-plugins
+
+# uninstall
+helm uninstall scheduler-plugins
+
+```
+
+## Run Pi Test with Kubeflux
+
+```bash
+cd $PROJECT_ROOT/manifests/kubeflux/measurement
+
+kubectl create -f ./pi-job-kubeflux.yaml 
 ```
