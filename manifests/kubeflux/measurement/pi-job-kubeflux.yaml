@@ -3,7 +3,7 @@ kind: Job
 metadata:
   name: pi-job-kubeflux-sched
 spec:
-  completions: 4
+  completions: 16
   template:
     metadata:
       labels:
